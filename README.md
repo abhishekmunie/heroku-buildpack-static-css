@@ -40,7 +40,7 @@ Example usage:
            -----> compressing main.css...done
            ...
            done.
-    -----> Creating default nginx configuration.done
+    -----> Creating default nginx configuration...done
     -----> Fetching nginx binaries
     -----> Vendoring nginx 1.0.14
     -----> Discovering process types

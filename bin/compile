@@ -17,7 +17,6 @@ chmod 755 compile_nginx
 curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-static-css/master/conf/package.json > $BUILD_DIR/package.json
 ./compile_nginx $BUILD_DIR $CACHE_DIR
 
-export PATH=bin:node_modules/.bin:/usr/local/bin:/usr/bin:/bin
 export PATH=$BUILD_DIR/bin:$BUILD_DIR/node_modules/.bin:$PATH
 
 #find $BUILD_DIR | sed -e 's/[^-][^\/]*\//--/g;s/--/ |-/'
@@ -59,7 +58,7 @@ echo "       done."
 if [ -f "${BUILD_DIR}/conf" ]; then
   echo "-----> Using existing nginx configuration."
 else
-  echo -n "-----> Creating default nginx configuration."
+  echo -n "-----> Creating default nginx configuration..."
   mkdir ${BUILD_DIR}/conf
   curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-static-css/master/conf/mime.types > ${BUILD_DIR}/conf/mime.types
   curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-static-css/master/conf/nginx.conf.erb > ${BUILD_DIR}/conf/nginx.conf.erb
