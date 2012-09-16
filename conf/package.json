@@ -1,0 +1,11 @@
+{
+  "name": "node-runner",
+  "version": "1.0.1",
+  "engines": {
+    "node": "0.8.8",
+    "npm": "1.1.49"
+  },
+  "dependencies": {
+    "less": "latest"
+  }
+}
