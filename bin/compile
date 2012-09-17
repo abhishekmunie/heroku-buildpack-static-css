@@ -10,6 +10,14 @@ unset GIT_DIR
 BUILD_DIR=$(mktemp -d -t node.XXXXXX)
 CACHE_DIR=$2
 
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
 curl --silent --location https://raw.github.com/heroku/heroku-buildpack-nodejs/master/bin/compile > compile_node
 
 chmod 755 compile_node
@@ -28,9 +36,9 @@ BUILD_DIR=$1
 echo "-----> Compiling LESS files..."
 find ${BUILD_DIR} -iregex ".*\.less" | while read -r lessfile
 do
-  echo -n "       -----> compiling ${lessfile#*$BUILD_DIR/}..."
+  echo -n "-----> compiling ${lessfile#*$BUILD_DIR/}..." | indent
   fname=${lessfile%.*}
-  lessc "$lessfile" > "$fname.css"
+  lessc "$lessfile" > "$fname.css" | indent
   echo "done"
 done
 echo "       done."
@@ -42,9 +50,9 @@ echo "done"
 echo "-----> Compressing CSS files..."
 find ${BUILD_DIR} -iregex ".*\.css" \! -iregex ".*\.min\.css" | while read -r cssfile
 do
-  echo -n "       -----> compressing ${cssfile#*$BUILD_DIR/}..."
+  echo -n "-----> compressing ${cssfile#*$BUILD_DIR/}..." | indent
   fname=${cssfile%.*}
-  java -jar yuicompressor-2.4.7.jar --type css -o "$fname.min.css" "$cssfile"
+  java -jar yuicompressor-2.4.7.jar --type css -o "$fname.min.css" "$cssfile" | indent
   csssha1=`openssl sha1 "$cssfile"`
   csssha1=${csssha1#*= }
   csssha1=${csssha1:0:8}
