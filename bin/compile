@@ -10,12 +10,12 @@ unset GIT_DIR
 BUILD_DIR=$(mktemp -d -t node.XXXXXX)
 CACHE_DIR=$2
 
-curl --silent --location https://raw.github.com/heroku/heroku-buildpack-nodejs/master/bin/compile > compile_nginx
+curl --silent --location https://raw.github.com/heroku/heroku-buildpack-nodejs/master/bin/compile > compile_node
 
-chmod 755 compile_nginx
+chmod 755 compile_node
 
 curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-static-css/master/conf/package.json > $BUILD_DIR/package.json
-./compile_nginx $BUILD_DIR $CACHE_DIR
+./compile_node $BUILD_DIR $CACHE_DIR
 
 export PATH=$BUILD_DIR/bin:$BUILD_DIR/node_modules/.bin:$PATH
 
