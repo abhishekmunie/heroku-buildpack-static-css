@@ -18,7 +18,6 @@ Example usage:
     $ git push heroku master
     ...
     -----> Heroku receiving push
-    -----> Removing .DS_Store files
     -----> Fetching custom buildpack... cloning with git...done
     -----> Static-CSS app detected
     -----> Resolving engine versions

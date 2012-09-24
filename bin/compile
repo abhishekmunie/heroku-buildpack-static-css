@@ -7,7 +7,8 @@ set -e
 # clean up leaking environment
 unset GIT_DIR
 
-BUILD_DIR=$(mktemp -d -t node.XXXXXX)
+# parse args
+BUILD_DIR=$1
 CACHE_DIR=$2
 
 function indent() {
@@ -17,6 +18,8 @@ function indent() {
     *)      sed -u "$c";;
   esac
 }
+
+BUILD_DIR=$(mktemp -d -t node.XXXXXX)
 
 curl --silent --location https://raw.github.com/heroku/heroku-buildpack-nodejs/master/bin/compile > compile_node
 
