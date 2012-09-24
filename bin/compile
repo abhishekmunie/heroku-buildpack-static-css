@@ -76,9 +76,8 @@ else
   echo "done"
 fi
 
-# Nginx -------------------------------------
+# Static ------------------------------------
 
-curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-nginx/master/bin/compile > compile_nginx
-
-chmod +x compile_nginx
-./compile_nginx $BUILD_DIR $CACHE_DIR
+curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-static/master/bin/compile > compile_static
+chmod +x compile_static
+./compile_static $BUILD_DIR $CACHE_DIR
