@@ -36,7 +36,23 @@ export PATH=$BUILD_DIR/bin:$BUILD_DIR/node_modules/.bin:$PATH
 
 BUILD_DIR=$1
 
-echo "-----> Compiling LESS files..."
+echo -n "-----> Installing SASS..."
+GHD=$GEM_HOME
+
+mkdir $PWD/.gem
+export GEM_HOME=$PWD/.gem
+gem install sass
+
+export PATH=$PWD/.gem/gems/sass-3.2.1/bin:$PATH
+echo "done"
+
+echo "-----> Compiling SASS..."
+sass --update $BUILD_DIR:$BUILD_DIR
+
+export GEM_HOME=$GHD
+echo "       done."
+
+echo "-----> Compiling LESS..."
 find ${BUILD_DIR} -iregex ".*\.less" | while read -r lessfile
 do
   echo -n "-----> compiling ${lessfile#*$BUILD_DIR/}..." | indent

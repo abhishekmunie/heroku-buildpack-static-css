@@ -9,7 +9,7 @@ Usage
 Example usage:
 
     $ ls -R *
-    _staticcss.yml		       source.less                main.css                   lib.min.css
+    _staticcss.yml		       SassySCC.scss                   source.less                main.css                   lib.min.css
     ...
 
     $ heroku create --stack cedar --buildpack https://github.com/abhishekmunie/heroku-buildpack-static-css.git
@@ -29,6 +29,9 @@ Example usage:
            less@1.3.0 /tmp/node.XHMNKL/node_modules/less
            Dependencies installed
     -----> Building runtime environment
+    -----> Installing SASS...done
+    -----> Compiling SCSS...
+           done.
     -----> Compiling LESS files...
            -----> compiling source.less...done
            ...
@@ -56,8 +59,8 @@ Hacking
 To modify this buildpack, fork it on Github. Push up changes to your fork, then
 create a test app with `--buildpack <your-github-url>` and push to it.
 
-This buildpack uses [LESS node.js command-line binary](http://lesscss.org/#-server-side-usage) to compile `filename.less` and create `filename.css`.
-It simply runs `lessc "filename.less" > "filename.css"` on all `.less` files.
+This buildpack first uses [SASS Ruby gem](http://sass-lang.com) to compile `.scss` & `.sass` files and [LESS node.js command-line binary](http://lesscss.org/#-server-side-usage) to compile `filename.less` to `filename.css`.
+It simply runs `sass --update $BUILD_DIR:$BUILD_DIR` and `lessc "filename.less" > "filename.css"` on all `.less` files.
 It then uses [YUI Compressor](https://yuilibrary.com/projects/yuicompressor/) to minify `filename.css` and create `filename.min.css`.
 It also creates a copy of `filename.min.css` file with first 8 characters of its sha1 (`filename.<sha1:0:8>.css`).
 It simply runs `java -jar yuicompressor-2.4.7.jar --type css -o "filename.min.css" "filename.css"` on all `.css` files except those ending in `.min.css`.
