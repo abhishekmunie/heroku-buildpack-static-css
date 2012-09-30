@@ -37,21 +37,15 @@ export PATH=$BUILD_DIR/bin:$BUILD_DIR/node_modules/.bin:$PATH
 BUILD_DIR=$1
 
 echo "-----> Installing SASS..."
-GHD=$GEM_HOME
-
 if [ ! -d "$PWD/.gem" ]; then
   mkdir $PWD/.gem
 fi
-export GEM_HOME=$PWD/.gem
-gem install sass | indent
-
-export PATH=$PWD/.gem/gems/sass-3.2.1/bin:$PATH
+gem install sass --no-rdoc --no-ri --install-dir "$PWD/.gem" | indent
+export GEM_PATH=$GEM_PATH:$PWD/.gem
 echo "       done."
 
 echo "-----> Compiling SASS..."
-sass --update $BUILD_DIR:$BUILD_DIR | indent
-
-export GEM_HOME=$GHD
+$PWD/.gem/bin/sass --update $BUILD_DIR:$BUILD_DIR | indent
 echo "       done."
 
 echo "-----> Compiling LESS..."
