@@ -44,9 +44,18 @@ gem install sass --no-rdoc --no-ri --install-dir "$PWD/.gem" | indent
 export GEM_PATH=$GEM_PATH:$PWD/.gem
 echo "       done."
 
-echo "-----> Compiling SASS..."
-$PWD/.gem/bin/sass --update $BUILD_DIR:$BUILD_DIR | indent
-echo "       done."
+if [ ! -d "$BUILD_DIR/config.rb" ]; then
+  echo "-----> Compiling SASS..."
+  $PWD/.gem/bin/sass --update $BUILD_DIR:$BUILD_DIR | indent
+  echo "       done."
+else
+  echo "-----> Installing Compass..."
+  gem install compass --no-rdoc --no-ri --install-dir "$PWD/.gem" | indent
+  echo "       done."
+  echo "-----> Compiling Compass..."
+  $PWD/.gem/bin/compass compile $BUILD_DIR | indent
+  echo "       done."
+fi
 
 echo "-----> Compiling LESS..."
 find ${BUILD_DIR} -iregex ".*\.less" | while read -r lessfile
