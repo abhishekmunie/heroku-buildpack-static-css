@@ -58,6 +58,8 @@ Example usage:
 The buildpack will detect your app as Static CSS if it has the file `_staticcss.yml` in the `root`. At present `_staticcss.yml` doesn't support any configuration.
 You can set custom nginx config as described for [heroku-buildpack-nginx](https://github.com/abhishekmunie/heroku-buildpack-nginx).
 
+If the app has `config.rb` in root it will be compiled using [Compass](http://compass-style.org/).
+
 Hacking
 -------
 
