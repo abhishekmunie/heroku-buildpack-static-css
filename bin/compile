@@ -44,6 +44,16 @@ gem install sass --no-rdoc --no-ri --install-dir "$PWD/.gem" | indent
 export GEM_PATH=$GEM_PATH:$PWD/.gem
 echo "       done."
 
+echo "-----> Compiling LESS..."
+find ${BUILD_DIR} -iregex ".*\.less" | while read -r lessfile
+do
+  echo -n "-----> compiling ${lessfile#*$BUILD_DIR/}..." | indent
+  fname=${lessfile%.*}
+  lessc "$lessfile" > "$fname.scss" | indent
+  echo "done"
+done
+echo "       done."
+
 if [ ! -f "$BUILD_DIR/config.rb" ]; then
   echo "-----> Compiling SASS..."
   $PWD/.gem/bin/sass --update $BUILD_DIR:$BUILD_DIR | indent
@@ -56,16 +66,6 @@ else
   $PWD/.gem/bin/compass compile $BUILD_DIR | indent
   echo "       done."
 fi
-
-echo "-----> Compiling LESS..."
-find ${BUILD_DIR} -iregex ".*\.less" | while read -r lessfile
-do
-  echo -n "-----> compiling ${lessfile#*$BUILD_DIR/}..." | indent
-  fname=${lessfile%.*}
-  lessc "$lessfile" > "$fname.css" | indent
-  echo "done"
-done
-echo "       done."
 
 echo -n "-----> Fetching YUI Compressor 2.4.7..."
 curl --silent --location http://cloud.github.com/downloads/abhishekmunie/heroku-buildpack-static-css/yuicompressor-2.4.7.jar.tar.gz | tar xz

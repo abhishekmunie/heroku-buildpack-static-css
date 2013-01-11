@@ -58,16 +58,16 @@ Example usage:
 The buildpack will detect your app as Static CSS if it has the file `_staticcss.yml` in the `root`. At present `_staticcss.yml` doesn't support any configuration.
 You can set custom nginx config as described for [heroku-buildpack-nginx](https://github.com/abhishekmunie/heroku-buildpack-nginx).
 
-If the app has `config.rb` in root it will be compiled using [Compass](http://compass-style.org/).
-
 Hacking
 -------
 
 To modify this buildpack, fork it on Github. Push up changes to your fork, then
 create a test app with `--buildpack <your-github-url>` and push to it.
 
-This buildpack first uses [SASS Ruby gem](http://sass-lang.com) to compile `.scss` & `.sass` files and [LESS node.js command-line binary](http://lesscss.org/#-server-side-usage) to compile `filename.less` to `filename.css`.
-It simply runs `sass --update $BUILD_DIR:$BUILD_DIR` and `lessc "filename.less" > "filename.css"` on all `.less` files.
+This buildpack first uses [LESS node.js command-line binary](http://lesscss.org/#-server-side-usage) to compile `filename.less` to `filename.scss`
+then [SASS Ruby gem](http://sass-lang.com) to compile `.scss` & `.sass` files.
+It simply runs `lessc "filename.less" > "filename.css"` and `sass --update $BUILD_DIR:$BUILD_DIR` on all `.less` files.
+If the app has `config.rb` in `root`, it will be compiled using [Compass](http://compass-style.org/) inplace of standard scss compilation.
 It then uses [YUI Compressor](https://yuilibrary.com/projects/yuicompressor/) to minify `filename.css` and create `filename.min.css`.
 It also creates a copy of `filename.min.css` file with first 8 characters of its sha1 (`filename.<sha1:0:8>.css`).
 It simply runs `java -jar yuicompressor-2.4.7.jar --type css -o "filename.min.css" "filename.css"` on all `.css` files except those ending in `.min.css`.
