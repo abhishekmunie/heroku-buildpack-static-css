@@ -30,8 +30,6 @@ curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-s
 
 export PATH=$BUILD_DIR/bin:$BUILD_DIR/node_modules/.bin:$PATH
 
-#find $BUILD_DIR | sed -e 's/[^-][^\/]*\//--/g;s/--/ |-/'
-
 # css compilation ----------------------------
 
 BUILD_DIR=$1
