@@ -65,6 +65,20 @@ else
   echo "       done."
 fi
 
+echo "-----> Cleaning LESS..."
+find ${BUILD_DIR} -iregex ".*\.less" | while read -r lessfile
+do
+  rm -f "$lessfile"
+done
+echo "       done."
+
+echo "-----> Cleaning SCSS..."
+find ${BUILD_DIR} -iregex ".*\.scss" | while read -r scssfile
+do
+  rm -f "$scssfile"
+done
+echo "       done."
+
 echo -n "-----> Fetching YUI Compressor 2.4.7..."
 curl --silent --location http://cloud.github.com/downloads/abhishekmunie/heroku-buildpack-static-css/yuicompressor-2.4.7.jar.tar.gz | tar xz
 echo "done"

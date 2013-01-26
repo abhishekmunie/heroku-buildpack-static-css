@@ -25,7 +25,7 @@ Example usage:
     -----> Fetching Node.js binaries
     -----> Vendoring node into slug
     -----> Installing dependencies with npm
-           less@1.3.0 ./node_modules/less 
+           less@1.3.0 ./node_modules/less
            less@1.3.0 /tmp/node.XHMNKL/node_modules/less
            Dependencies installed
     -----> Building runtime environment
@@ -56,6 +56,7 @@ Example usage:
     ...
 
 The buildpack will detect your app as Static CSS if it has the file `_staticcss.yml` in the `root`. At present `_staticcss.yml` doesn't support any configuration.
+`.less` and `.scss` files will be removed after compilation.
 You can set custom nginx config as described for [heroku-buildpack-nginx](https://github.com/abhishekmunie/heroku-buildpack-nginx).
 
 Hacking
