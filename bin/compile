@@ -45,7 +45,7 @@ echo "       done."
 echo "-----> Compiling plugins..."
 if [ -f "$BUILD_DIR/plugins/compile" ]; then
   chmod +x $BUILD_DIR/plugins/compile
-  $BUILD_DIR/plugins/compile
+  $BUILD_DIR/plugins/compile $BUILD_DIR $CACHE_DIR
 fi
 echo "       done."
 
