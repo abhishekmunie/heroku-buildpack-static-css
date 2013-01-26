@@ -6,7 +6,7 @@
     "npm": "1.1.49"
   },
   "dependencies": {
-    "less"   : "stable",
-    "recess" : "stable"
+    "less"   : "latest",
+    "recess" : "latest"
   }
 }
