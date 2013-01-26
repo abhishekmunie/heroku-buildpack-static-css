@@ -42,8 +42,15 @@ gem install sass --no-rdoc --no-ri --install-dir "$PWD/.gem" | indent
 export GEM_PATH=$GEM_PATH:$PWD/.gem
 echo "       done."
 
+echo "-----> Compiling plugins..."
+if [ -f "$BUILD_DIR/plugins/compile" ]; then
+  chmod +x $BUILD_DIR/plugins/compile
+  $BUILD_DIR/plugins/compile
+fi
+echo "       done."
+
 echo "-----> Compiling LESS..."
-find ${BUILD_DIR} -iregex ".*\.less" | while read -r lessfile
+find ${BUILD_DIR} -iregex ".*\.less" \! -path '*/plugins/*' | while read -r lessfile
 do
   echo -n "-----> compiling ${lessfile#*$BUILD_DIR/}..." | indent
   fname=${lessfile%.*}
@@ -66,14 +73,14 @@ else
 fi
 
 echo "-----> Cleaning LESS..."
-find ${BUILD_DIR} -iregex ".*\.less" | while read -r lessfile
+find ${BUILD_DIR} -iregex ".*\.less" \! -path '*/plugins/*' | while read -r lessfile
 do
   rm -f "$lessfile"
 done
 echo "       done."
 
 echo "-----> Cleaning SCSS..."
-find ${BUILD_DIR} -iregex ".*\.scss" | while read -r scssfile
+find ${BUILD_DIR} -iregex ".*\.scss" \! -path '*/plugins/*' | while read -r scssfile
 do
   rm -f "$scssfile"
 done
