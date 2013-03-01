@@ -1,7 +1,7 @@
 Heroku buildpack: Static-CSS
 ============================
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpack) which compiles less files, minifies css and serves css files using static nginx.
+This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpack) which compiles less files, minifies css and serves css files using static server.
 
 Usage
 -----
@@ -47,17 +47,12 @@ Example usage:
            -----> compressing main.css...done
            ...
            done.
-    -----> Creating default nginx configuration...done
-    -----> Fetching nginx binaries
-    -----> Vendoring nginx 1.0.14
-    -----> Discovering process types
-           Procfile declares types      -> (none)
-           Default types for Static-CSS -> web
+           ...
     ...
 
 The buildpack will detect your app as Static CSS if it has the file `_static_css.cfg` in the `root`. At present `_static_css.cfg` doesn't support any configuration.
 `.less` and `.scss` files will be removed after compilation.
-You can set custom nginx config as described for [heroku-buildpack-nginx](https://github.com/abhishekmunie/heroku-buildpack-nginx).
+You can set custom static config as described for [heroku-buildpack-static](https://github.com/abhishekmunie/heroku-buildpack-static).
 
 Hacking
 -------

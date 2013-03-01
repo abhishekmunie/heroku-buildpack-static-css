@@ -19,6 +19,7 @@ function indent() {
   esac
 }
 
+source $BUILD_DIR/_static_css.cfg
 
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
@@ -52,7 +53,7 @@ fi
 echo "       done."
 
 echo "-----> Compiling LESS..."
-find ${BUILD_DIR} -iregex ".*\.less" \! -path '*/plugins/*' | while read -r lessfile
+find $BUILD_DIR -iregex ".*\.less" \! -path '*/plugins/*' | while read -r lessfile
 do
   echo -n "-----> compiling ${lessfile#*$BUILD_DIR/}..." | indent
   fname=${lessfile%.*}
@@ -75,14 +76,14 @@ else
 fi
 
 echo "-----> Cleaning LESS..."
-find ${BUILD_DIR} -iregex ".*\.less" \! -path '*/plugins/*' | while read -r lessfile
+find $BUILD_DIR -iregex ".*\.less" \! -path '*/plugins/*' | while read -r lessfile
 do
   rm -f "$lessfile"
 done
 echo "       done."
 
 echo "-----> Cleaning SCSS..."
-find ${BUILD_DIR} -iregex ".*\.scss" \! -path '*/plugins/*' | while read -r scssfile
+find $BUILD_DIR -iregex ".*\.scss" \! -path '*/plugins/*' | while read -r scssfile
 do
   rm -f "$scssfile"
 done
@@ -93,7 +94,7 @@ curl --silent --location http://cloud.github.com/downloads/abhishekmunie/heroku-
 echo "done"
 
 echo "-----> Compressing CSS files..."
-find ${BUILD_DIR} -iregex ".*\.css" \! -iregex ".*\.min\.css" | while read -r cssfile
+find $BUILD_DIR -iregex ".*\.css" \! -iregex ".*\.min\.css" | while read -r cssfile
 do
   echo -n "-----> compressing ${cssfile#*$BUILD_DIR/}..." | indent
   fname=${cssfile%.*}
@@ -106,20 +107,17 @@ do
 done
 echo "       done."
 
-# init default nginx configuration ----------
-
-if [ -d "${BUILD_DIR}/conf" ]; then
-  echo "-----> Using existing nginx configuration."
-else
-  echo -n "-----> Creating default nginx configuration..."
-  mkdir ${BUILD_DIR}/conf
-  curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-static-css/master/conf/mime.types > ${BUILD_DIR}/conf/mime.types
-  curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-static-css/master/conf/nginx.conf.erb > ${BUILD_DIR}/conf/nginx.conf.erb
-  echo "done"
-fi
-
 # Static ------------------------------------
 
-curl --silent --location https://raw.github.com/abhishekmunie/heroku-buildpack-static/master/bin/compile > compile_static
-chmod +x compile_static
-./compile_static $BUILD_DIR $CACHE_DIR
+echo "-----> Creating Static Server..."
+STATIC_BUILDPACK_DIR=$(mktemp -d -t static.XXXXXX)
+git clone --quiet https://github.com/abhishekmunie/heroku-buildpack-static.git $STATIC_BUILDPACK_DIR
+mv -f $STATIC_BUILDPACK_DIR/vendor/* $LP_DIR/vendor
+mv $STATIC_BUILDPACK_DIR/bin/compile $LP_DIR/bin/compile_static
+$LP_DIR/bin/compile_static $BUILD_DIR $CACHE_DIR | indent
+echo "       done."
+
+# Cleanup -----------------------------------
+rm -fr $NODE_BUILDPACK_DIR
+rm -fr $NODE_BUILD_DIR
+rm -fr $STATIC_BUILDPACK_DIR
