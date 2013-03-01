@@ -9,7 +9,7 @@ Usage
 Example usage:
 
     $ ls -R *
-    _staticcss.yml		       SassySCC.scss                   source.less                main.css                   lib.min.css
+    _static_css.cfg            SassySCC.scss              source.less                main.css                   lib.min.css
     ...
 
     $ heroku create --stack cedar --buildpack https://github.com/abhishekmunie/heroku-buildpack-static-css.git
@@ -55,7 +55,7 @@ Example usage:
            Default types for Static-CSS -> web
     ...
 
-The buildpack will detect your app as Static CSS if it has the file `_staticcss.yml` in the `root`. At present `_staticcss.yml` doesn't support any configuration.
+The buildpack will detect your app as Static CSS if it has the file `_static_css.cfg` in the `root`. At present `_static_css.cfg` doesn't support any configuration.
 `.less` and `.scss` files will be removed after compilation.
 You can set custom nginx config as described for [heroku-buildpack-nginx](https://github.com/abhishekmunie/heroku-buildpack-nginx).
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # bin/use <build-dir>
 
-if [ -f $1/_staticcss.yml ]; then
+if [ -f $1/_static_css.cfg ]; then
   echo "Static-CSS" && exit 0
 else
   echo "no" && exit 1
