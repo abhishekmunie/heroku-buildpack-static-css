@@ -23,6 +23,8 @@ source $BUILD_DIR/_static_css.cfg
 
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
+echo "       * Note: This buildpack will be soon merged into abhishekmunie/heroku-buildpack-static"
+
 # Node Installation --------------------------
 
 NODE_BUILDPACK_DIR=$(mktemp -d -t node.XXXXXX)

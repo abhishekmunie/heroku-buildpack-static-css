@@ -1,6 +1,8 @@
 Heroku buildpack: Static-CSS
 ============================
 
+* Note: This buildpack will be merged into [abhishekmunie/heroku-buildpack-static](https://github.com/abhishekmunie/heroku-buildpack-static)
+
 This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpack) which compiles less files, minifies css and serves css files using static server.
 
 Usage
